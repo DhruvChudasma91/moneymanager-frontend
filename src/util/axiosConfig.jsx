@@ -1,51 +1,51 @@
 import axios from "axios";
+import { BASE_URL } from "./apiEndpoints";
 
-const axiosCongif = axios.create({
-    baseURL: "http://localhost:8080/api/v1.0",
-    headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-    }
+const axiosConfig = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
 });
 
-//list of public endpoints
 const excludeEndpoints = ["/login", "/register", "/status", "/health", "/activate"];
 
-//request interceptor
-axiosCongif.interceptors.request.use((config) => {
-    const shouldSkipToken = excludeEndpoints.some((endpoint) => {
-        return config.url?.includes(endpoint)    
-    })
+axiosConfig.interceptors.request.use(
+  (config) => {
+    const shouldSkipToken = excludeEndpoints.some((endpoint) =>
+      config.url?.includes(endpoint)
+    );
 
-    if(!shouldSkipToken) {
-        const accessToken = localStorage.getItem("token");
+    if (!shouldSkipToken) {
+      const accessToken = localStorage.getItem("token");
 
-        if(accessToken) {
-            config.headers.Authorization = `Bearer ${accessToken}`;
-        }
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
     }
 
     return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-}, (error) => {
-    return Promise.reject(error);
-});
-
-
-//response interceptor
-axiosCongif.interceptors.response.use((response) => {
-    return response;
-}, (error) => {
-
-    if(error.response) {
-        if(error.response.status === 401) {
-            window.location.href = "/login";
-        } else if(error.response.status === 500) {
-            console.error("Server error. Please try again later.");
-        }
-    } else if(error.code === "ECONNABORTED") {
-        console.log("Request timeout. Please try again.");
+axiosConfig.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      if (error.response.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      } else if (error.response.status === 500) {
+        console.error("Server error. Please try again later.");
+      }
+    } else if (error.code === "ECONNABORTED") {
+      console.log("Request timeout. Please try again.");
     }
 
     return Promise.reject(error);
-});
+  }
+);
+
+export default axiosConfig;
