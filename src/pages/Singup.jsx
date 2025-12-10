@@ -2,6 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets.js";
 import Input from "../components/Input.jsx";
+import { validateEmail } from "../util/validation.js";
+import axiosConfig from "../util/axiosConfig.jsx";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
+import toast from "react-hot-toast";
+import { LoaderCircle } from "lucide-react";
 
 
 
@@ -11,8 +16,54 @@ const Singup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        //Basic validation can be added here
+        if(!fullName.trim()){
+            setError("Please enter your full name.");
+            setIsLoading(false);
+            return;
+        }
+
+        if(!validateEmail(email)){
+            setError("Please enter valid email.");
+            setIsLoading(false);
+            return;
+        }
+
+        if(!password.trim()){
+            setError("Please enter your password.");
+            setIsLoading(false);
+            return;
+        }
+
+        setError("");
+
+        //signup api call can be made here
+        try {
+            const response = await axiosConfig.post(API_ENDPOINTS.REGISTER, {
+                fullName,
+                email,
+                password
+            })
+
+            if(response.status === 201){
+                toast.success("Account created successfully.");
+                navigate("/login");
+            }
+        } catch (err) {
+            console.error("Error during signup:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return(
         <div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
@@ -26,7 +77,7 @@ const Singup = () => {
                     Start tracking your spendings by joining with us. 
                 </p>
 
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4">
 
                     <div className="flex justify-center mb-6">
                         {/* Profile Image */}
@@ -39,7 +90,6 @@ const Singup = () => {
                             placeholder="John Doe"
                             value={fullName} 
                             onChange={(e) => setFullName(e.target.value)}
-                            required={true}
                         />
                         <Input 
                             label="Email" 
@@ -47,7 +97,6 @@ const Singup = () => {
                             placeholder="name@example.com"
                             value={email} 
                             onChange={(e) => setEmail(e.target.value)}
-                            required={true}
                         />
                         
                         <div className="col-span-2">
@@ -57,7 +106,6 @@ const Singup = () => {
                                 placeholder="*******"
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}
-                                required={true}
                             />
                         </div>
 
@@ -69,8 +117,15 @@ const Singup = () => {
                             </div>
                         )}
 
-                        <button className="col-span-2 w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-103" type="submit">
-                            Sign Up
+                        <button disabled={isLoading} className={`w-full col-span-2 bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
+                            {isLoading ? (
+                                <>
+                                    <LoaderCircle className="animate-spin w-5 h-5"/>
+                                    Signing Up...
+                                </>
+                            ) : (
+                                "Sign Up"
+                            )}
                         </button>
 
                         <p className="text-sm text-slate-800 text-center mt-6 col-span-2">

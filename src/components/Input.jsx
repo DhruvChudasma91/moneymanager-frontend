@@ -7,7 +7,6 @@ const Input = ({
     placeholder, 
     value, 
     onChange,
-    required = false
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +19,6 @@ const Input = ({
         <div className="mb-4">
             <label className="text-[13px] text-slate-800 mb-1">
                 {label}
-                {required && <span className="text-red-500 ml-1">*</span>}
             </label>
             <div className="relative">
 
@@ -31,7 +29,6 @@ const Input = ({
                 value={value} 
                 onChange={(e) => onChange(e)}
                 placeholder={placeholder}
-                required={required}
                 />
                 {type === 'password' && (
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
