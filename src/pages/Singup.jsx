@@ -8,7 +8,7 @@ import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import ProfilePhotoSelector from "../components/ProfilePhotoSelector.jsx";
-
+import uploadProfileImage from "../util/uploadProfileImage.js";
 
 
 const Singup = () => {
@@ -24,6 +24,7 @@ const Singup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let profileImageUrl = "";
         setIsLoading(true);
 
         //Basic validation can be added here
@@ -49,10 +50,19 @@ const Singup = () => {
 
         //signup api call can be made here
         try {
+
+            //upload profile image if selected
+            if(profileImage) {
+                const imageUrl = await uploadProfileImage(profileImage);
+                profileImageUrl = imageUrl || "";
+            }
+
+
             const response = await axiosConfig.post(API_ENDPOINTS.REGISTER, {
                 fullName,
                 email,
-                password
+                password,
+                profileImageUrl
             })
 
             if(response.status === 201){
