@@ -1,6 +1,9 @@
+import Dashboard from "../components/Dashboard";
 const Income = () => {
   return (
-    <div>Income</div>
+    <Dashboard>
+      This is Income Page
+    </Dashboard>
   )
 }
 

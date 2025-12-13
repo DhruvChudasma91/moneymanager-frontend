@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LogOut, User, X } from "lucide-react";
 import { Menu } from 'lucide-react';
 import { assets } from "../assets/assets";
+import Sidebar from "./Sidebar";
 
 
 const Menubar = () => {
@@ -90,6 +91,12 @@ const Menubar = () => {
             </div>
 
             {/*Mobile Side Menu*/}
+            {openSideMenu && (
+                <div className="fixed left-0 right-0 bg-white border-0 border-gray-200 lg:hidden z-20 top-[73px]">
+                    <Sidebar/>
+                </div>
+            )}
+            
         </div>
     )
 }
