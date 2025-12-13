@@ -36,7 +36,9 @@ axiosConfig.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401) {
         localStorage.removeItem("token");
-        window.location.href = "/login";
+        if (!window.location.pathname.includes("/login")) {
+          window.location.href = "/login";
+        }
       } else if (error.response.status === 500) {
         console.error("Server error. Please try again later.");
       }

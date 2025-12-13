@@ -129,7 +129,7 @@ const Singup = () => {
                             </div>
                         )}
 
-                        <button disabled={isLoading} className={`w-full col-span-2 bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
+                        <button disabled={isLoading} className={`cursor-pointer w-full col-span-2 bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
                             {isLoading ? (
                                 <>
                                     <LoaderCircle className="animate-spin w-5 h-5"/>

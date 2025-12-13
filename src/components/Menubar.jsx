@@ -15,11 +15,13 @@ const Menubar = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.clear();
+        localStorage.removeItem("token");
         clearUser();
         setShowDropdown(false);
         navigate("/login");
     }
+
+    if (!user) return null;
 
     return (
         <div className="flex items-center justify-between gap-5 bg-white border border-b border-grey-200/50 backdrop-blur-[2px] px-4 py-4 sm:px-7 sticky top-0 z-30">
@@ -62,10 +64,10 @@ const Menubar = () => {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-800 truncate">
-                                        {user.fullName}
+                                        {user?.fullName}
                                     </p>
                                     <p className="text-sm text-gray-500 truncate"> 
-                                        {user.email}
+                                        {user?.email}
                                     </p>
                                 </div>
                             </div>

@@ -6,7 +6,10 @@ import Sidebar from "./Sidebar";
 
 const Dashboard = () => {
 
-    const {user} = useContext(AppContext);
+    const {user, loading} = useContext(AppContext);
+
+    if(loading) return null;
+    
 
     return (
         <div>

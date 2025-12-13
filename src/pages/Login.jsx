@@ -100,7 +100,7 @@ const Login = () => {
                         </div>
                     )}
 
-                    <button disabled={isLoading} className={`w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
+                    <button disabled={isLoading} className={`cursor-pointer w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2 ${isLoading ? 'opacity-60 cursor-not-allowed': ''}`} type="submit">
                         {isLoading ? (
                             <>
                                 <LoaderCircle className="animate-spin w-5 h-5" />
