@@ -25,7 +25,7 @@ const Menubar = () => {
     if (!user) return null;
 
     return (
-        <div className="flex items-center justify-between gap-5 bg-white border border-b border-grey-200/50 backdrop-blur-[2px] px-4 py-4 sm:px-7 sticky top-0 z-30">
+        <div className="flex items-center justify-between gap-5 bg-white border border-b border-grey-200 backdrop-blur-[2px] px-4 py-4 sm:px-7 sticky top-0 z-30">
             {/* Left Side - Menu button and title */}
             <div className="flex items-center gap-5">
                 <button 
@@ -92,7 +92,7 @@ const Menubar = () => {
 
             {/*Mobile Side Menu*/}
             {openSideMenu && (
-                <div className="fixed left-0 right-0 bg-white border-0 border-gray-200 lg:hidden z-20 top-[73px]">
+                <div className="fixed left-0 right-0 bg-white border-b border-gray-200 lg:hidden z-20 top-[73px]">
                     <Sidebar/>
                 </div>
             )}

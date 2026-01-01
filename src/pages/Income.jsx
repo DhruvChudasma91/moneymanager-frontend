@@ -1,7 +1,7 @@
 import Dashboard from "../components/Dashboard";
 const Income = () => {
   return (
-    <Dashboard>
+    <Dashboard activeMenu="Income">
       This is Income Page
     </Dashboard>
   )

@@ -4,7 +4,7 @@ import { AppContext } from "../context/AppContext";
 import Sidebar from "./Sidebar";
 
 
-const Dashboard = ({children}) => {
+const Dashboard = ({children, activeMenu}) => {
 
     const {user, loading} = useContext(AppContext);
 
@@ -13,10 +13,10 @@ const Dashboard = ({children}) => {
 
     return (
         <div>
-            <Menubar />
+            <Menubar activeMenu={activeMenu}/>
             <div className="flex">
                 <div className="max-[1080px]:hidden">
-                    <Sidebar />
+                    <Sidebar activeMenu={activeMenu}/>
                 </div>
                 
                 <div className="grow mx-5">{children}</div>
