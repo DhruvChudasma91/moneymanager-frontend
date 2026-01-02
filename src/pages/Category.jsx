@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
 import { API_ENDPOINTS } from "../util/apiEndpoints";
 import toast from "react-hot-toast";
+import Modal from "../components/Modal";
 
 const Category = () => {
     useUser();
@@ -46,6 +47,7 @@ const Category = () => {
                 <div className="flex justify-between items-center mb-5">
                     <h2 className="text-2xl font-semibold">All Categories</h2>
                     <button 
+                        onClick={() => setOpenAddCategoryModal(true)}
                         className="flex items-center gap-1 bg-purple-800 text-white px-4 py-2 rounded-lg hover:bg-purple-900 cursor-pointer transition">
                         <Plus size={15} />
                         Add Category
@@ -53,9 +55,10 @@ const Category = () => {
                 </div>
 
                 {/* List of categories */}
-                <CategoryList />
+                <CategoryList categories={categoryData}/>
 
                 {/*Adding category modal*/}
+                <Modal isOpen={openAddCategoryModal} onClose={() => setOpenAddCategoryModal(false)} title="Add Category">Category form</Modal>
 
                 {/*Updating category modal*/}
 
