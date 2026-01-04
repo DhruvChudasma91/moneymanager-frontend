@@ -7,6 +7,7 @@ import axiosConfig from "../util/axiosConfig";
 import { API_ENDPOINTS } from "../util/apiEndpoints";
 import toast from "react-hot-toast";
 import Modal from "../components/Modal";
+import AddCategoryForm from "../components/AddCategoryForm";
 
 const Category = () => {
     useUser();
@@ -58,7 +59,9 @@ const Category = () => {
                 <CategoryList categories={categoryData}/>
 
                 {/*Adding category modal*/}
-                <Modal isOpen={openAddCategoryModal} onClose={() => setOpenAddCategoryModal(false)} title="Add Category">Category form</Modal>
+                <Modal isOpen={openAddCategoryModal} onClose={() => setOpenAddCategoryModal(false)} title="Add Category">
+                    <AddCategoryForm/>
+                </Modal>
 
                 {/*Updating category modal*/}
 
