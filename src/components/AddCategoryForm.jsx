@@ -26,6 +26,15 @@ const AddCategoryForm = () => {
                 value={category.name}
                 onChange={({target}) => handleChange("name", target.value)}
             />
+
+            <Input 
+                label="Category Type"
+                isSelect={true}
+                options={categoryTypeOptions}
+                value={category.type}
+                onChange={({target}) => handleChange("type", target.value)}
+            />
+            
         </div>
     )
 }

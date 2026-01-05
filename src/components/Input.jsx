@@ -7,6 +7,8 @@ const Input = ({
     placeholder, 
     value, 
     onChange,
+    isSelect,
+    options
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -21,15 +23,29 @@ const Input = ({
                 {label}
             </label>
             <div className="relative">
+                {isSelect ? (
+                    <select
+                    className="w-full bg-transparent outline-none border border-gray-300 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    value={value}
+                    onChange={(e) => onChange(e)}
+                    >
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                    </select>
+                ) : (
 
-                <input 
-                className="w-full bg-transparent outline-none px-3 py-2 pr-10 border border-gray-300 rounded-md
-                text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                type={type === 'password' ? (showPassword ? 'text' : 'password') : type} 
-                value={value} 
-                onChange={(e) => onChange(e)}
-                placeholder={placeholder}
-                />
+                    <input 
+                    className="w-full bg-transparent outline-none px-3 py-2 pr-10 border border-gray-300 rounded-md text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    type={type === 'password' ? (showPassword ? 'text' : 'password') : type} 
+                    value={value} 
+                    onChange={(e) => onChange(e)}
+                    placeholder={placeholder}
+                    />
+                )}
+                
                 {type === 'password' && (
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
                         {showPassword ? (
