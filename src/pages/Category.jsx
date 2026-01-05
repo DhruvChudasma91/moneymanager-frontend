@@ -74,6 +74,36 @@ const Category = () => {
 
     }
 
+    const handleEditCategory = (category) => {
+        setSelectedCategory(category);
+        setOpenEditCategoryModal(true);
+    }
+
+    const handleUpdateCategory = async (updatedCategory) => {
+        const {id,name, type, icon} = updatedCategory;
+
+        if(!name.trim()) {
+            toast.error("Category name is required");
+            return;
+        }
+
+        if(!id) {
+            toast.error("Invalid category id selected");
+            return;
+        }
+
+        try {
+            await axiosConfig.put(API_ENDPOINTS.UPDATE_CATEGORY(id), {name, type, icon});
+            setOpenEditCategoryModal(false);
+            setSelectedCategory(null);
+            toast.success("Category updated successfully");
+            fetchCategoryDetails();
+        } catch (error) {
+            console.error("Error updating category:", error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || "Failed to update category.");
+        }
+    };
+
     return (
         <Dashboard activeMenu="Category">
             
@@ -90,7 +120,7 @@ const Category = () => {
                 </div>
 
                 {/* List of categories */}
-                <CategoryList categories={categoryData}/>
+                <CategoryList categories={categoryData} onEditCategory={handleEditCategory}/>
 
                 {/*Adding category modal*/}
                 <Modal isOpen={openAddCategoryModal} onClose={() => setOpenAddCategoryModal(false)} title="Add Category">
@@ -98,6 +128,20 @@ const Category = () => {
                 </Modal>
 
                 {/*Updating category modal*/}
+                <Modal
+                    isOpen={openEditCategoryModal}
+                    onClose={() => {
+                        setOpenEditCategoryModal(false);
+                        setSelectedCategory(null);
+                    }}
+                    title="Update Category"
+                >
+                    <AddCategoryForm
+                        initialCategoryData={selectedCategory}
+                        onAddCategory={handleUpdateCategory}
+                        isEditing={true}
+                    />
+                </Modal>
 
             </div>
         </Dashboard>

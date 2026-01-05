@@ -4,10 +4,10 @@ const Modal = ({isOpen, onClose, children, title}) => {
     if(!isOpen) return null;
     return (
         <div className="fixed inset-0 flex items-center justify-center w-full h-full overflow-hidden bg-black/40 backdrop-blur-sm"
-            onClick={onClose}
+            // onClick={onClose}
         >
             <div className="relative p-4 w-full max-w-2xl max-h-[90vh]"
-                onClick={(e) => e.stopPropagation()}
+                // onClick={(e) => e.stopPropagation()}
             >
                 {/*Modal Header*/}
                 <div className="relative bg-white rounded-xl shadow-2xl border border-gray-100">
