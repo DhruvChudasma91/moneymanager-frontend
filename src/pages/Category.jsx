@@ -49,6 +49,16 @@ const Category = () => {
             return;
         }
 
+        const isExist = categoryData.some((cat) => {
+            return cat.name.toLowerCase() === name.trim().toLowerCase();
+        });
+
+        if(isExist) {
+            toast.error("Category with this name already exists");
+            setOpenAddCategoryModal(false);
+            return;
+        }
+
         try {
             const response = await axiosConfig.post(API_ENDPOINTS.ADD_CATEGORY, {name, type, icon});
             if(response.status === 201) {
