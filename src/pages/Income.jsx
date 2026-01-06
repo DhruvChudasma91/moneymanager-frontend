@@ -10,6 +10,7 @@ import Modal from "../components/Modal";
 import { Plus } from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm";
 import DeleteAlert from "../components/DeleteAlert";
+import IncomeOverview from "../components/IncomeOverview";
 
 const Income = () => {
   useUser();
@@ -134,6 +135,8 @@ const Income = () => {
               <Plus size={18} />
               <span>Add Income</span>
             </button>
+
+            <IncomeOverview transactions={incomeData}/>
           </div>
 
           <IncomeList 
