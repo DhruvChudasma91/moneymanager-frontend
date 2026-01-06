@@ -127,7 +127,7 @@ const Income = () => {
 
           <IncomeList 
             transactions={incomeData} 
-            onDelete={(incomeId) => console.log("Delete income:", incomeId)}
+            onDelete={(incomeId) => setOpenDeleteIncomeModal({show: true, data: incomeId})}
           />
 
           <Modal 
@@ -140,6 +140,15 @@ const Income = () => {
               categories = {categories}
             />
           </Modal>
+
+          <Modal 
+            isOpen={openDeleteIncomeModal.show}
+            onClose={() => setOpenDeleteIncomeModal({show : false, data: null})}
+            title = "Delete Income"
+          >
+            Delete confirmation
+          </Modal>
+
         </div>
       </div>
     </Dashboard>
