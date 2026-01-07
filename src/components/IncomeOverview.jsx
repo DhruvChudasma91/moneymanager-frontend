@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { prepareIncomeLineChartData } from "../util/util";
+import CustomLineChart from "./CustomLineChart";
 
 const IncomeOverview = ({transactions}) => {
     const [chartData, setChartData] = useState([]);
@@ -21,12 +23,13 @@ const IncomeOverview = ({transactions}) => {
                     <p className="text-xs text-gray-400 mt-0.5">
                         Track your earning over time and analyze your income trends.
                     </p>
-                </div>
-
-                <div className="mt-10">
-                    Line chart
-                </div>   
+                </div>  
             </div>
+
+            <div className="mt-10">
+                <CustomLineChart data={chartData} />
+            </div>
+             
         </div>
     )
 }
