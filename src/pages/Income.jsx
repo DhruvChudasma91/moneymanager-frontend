@@ -7,7 +7,7 @@ import { API_ENDPOINTS } from "../util/apiEndpoints";
 import toast from "react-hot-toast";
 import IncomeList from "../components/IncomeList";
 import Modal from "../components/Modal";
-import { Plus } from "lucide-react";
+import { EarOff, Plus } from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm";
 import DeleteAlert from "../components/DeleteAlert";
 import IncomeOverview from "../components/IncomeOverview";
@@ -125,6 +125,37 @@ const Income = () => {
     }
   }
 
+  const handleDownloadIncomeDetails = async () => {
+    try {
+      const response = await axiosConfig.get(API_ENDPOINTS.INCOME_EXCEL_DOWNLOAD, {responseType: "blob"});
+      let filename = "income_details.xlsx";
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success("Download income details successfully");
+    } catch (error) {
+      console.log('Error downloading income details:', error);
+      toast.error(error.response?.data?.message || "Failed to download income");
+    }
+  }
+
+  const handleEmailIncomeDetails = async () => {
+    try {
+      const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_INCOME);
+      if(response.status === 200) {
+        toast.success("Income details emailed successfully");
+      }
+    } catch (error) {
+      console.log("Error emailing income details:", error);
+      toast.error(error.response?.data?.message || "Failed to email income");
+    }
+  }
+
   return (
     <Dashboard activeMenu="Income">
       <div className="my-5 mx-auto">
@@ -137,6 +168,8 @@ const Income = () => {
           <IncomeList 
             transactions={incomeData} 
             onDelete={(incomeId) => setOpenDeleteIncomeModal({show: true, data: incomeId})}
+            onDownload={handleDownloadIncomeDetails}
+            onEmail={handleEmailIncomeDetails}
           />
 
           <Modal 
