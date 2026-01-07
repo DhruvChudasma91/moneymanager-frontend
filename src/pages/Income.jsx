@@ -131,12 +131,7 @@ const Income = () => {
         <div className="grid grid-cols-1 gap-6">
           <div>
             {/* overview for income with line chart */}
-            <button onClick={() => setOpenAddIncomeModal(true)} className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-purple-700 hover:bg-blue-500 text-white transition-colors shadow-md">
-              <Plus size={18} />
-              <span>Add Income</span>
-            </button>
-
-            <IncomeOverview transactions={incomeData}/>
+            <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)}/>
           </div>
 
           <IncomeList 
