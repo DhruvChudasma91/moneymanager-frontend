@@ -50,3 +50,33 @@ export const prepareIncomeLineChartData = (transactions) => {
 
     return chartData;
 };
+
+export const prepareExpenseLineChartData = (transactions) => {
+    if (!transactions || transactions.length === 0) {
+        return [];
+    }
+
+    // Sort transactions by date
+    const sortedTransactions = [...transactions].sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    // Group transactions by date and sum amounts
+    const dateMap = {};
+    sortedTransactions.forEach(transaction => {
+        const date = transaction.date;
+        if (!dateMap[date]) {
+            dateMap[date] = 0;
+        }
+        dateMap[date] += transaction.amount;
+    });
+
+    // Convert to array format for chart
+    const chartData = Object.entries(dateMap).map(([date, amount]) => ({
+        date,
+        amount,
+        formattedAmount: addThousandSeparator(amount)
+    }));
+
+    return chartData;
+};
