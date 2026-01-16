@@ -9,7 +9,7 @@ const Transactions = ({transactions, onMore, type, title}) => {
                 <h5 className="text-lg font-semibold text-gray-900">{title}</h5>
                 <button
                     onClick={onMore}
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-purple-600 border border-purple-500 rounded-lg hover:bg-purple-50 transition-colors duration-200"
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-purple-600 border border-purple-500 rounded-lg hover:bg-purple-50 transition-colors duration-200 cursor-pointer"
                 >
                     More <ArrowRight size={16} />
                 </button>
