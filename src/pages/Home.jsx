@@ -4,7 +4,7 @@ import InfoCard from "../components/InfoCard";
 import { useUser } from "../hooks/useUser";
 import {addThousandSeparator} from "../util/util"
 import { useNavigate } from "react-router-dom";
-import { useCallback,useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosConfig from "../util/axiosConfig";
 import { API_ENDPOINTS } from "../util/apiEndpoints";
 import toast from "react-hot-toast";
@@ -18,7 +18,7 @@ const Home = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchDashboardData = useCallback(async () => {
+  const fetchDashboardData = async () => {
     if(loading) return;
     setLoading(true);
 
@@ -29,28 +29,21 @@ const Home = () => {
       }
     } catch (error) {
       console.error("Something went wrong while fetching dashboard data:", error);
-
-      if (error.response?.status === 401 || error.response?.status === 403) {
-        toast.error("Session expired. Please login again.");
-        navigate("/login");
-        return;
-      }
-
       toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }
-
-  },[loading, navigate]);
+  };
 
   useEffect(() => {
     fetchDashboardData();
-  }, [fetchDashboardData]);
+    return () => {};
+  }, []);
 
   return (
     <div>
       <Dashboard activeMenu="Dashboard">
-        <div className="max-w-7xl mx-auto my-6 px-4">
+        <div className="mx-auto my-6">
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -99,9 +92,7 @@ const Home = () => {
               type="income"
               title="Recent Incomes"
             />
-
           </div>
-
         </div>
       </Dashboard>
     </div>

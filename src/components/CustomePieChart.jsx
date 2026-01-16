@@ -15,7 +15,7 @@ const CustomePieChart = ({
   return (
     <div className="w-full flex flex-col items-center py-4">
       {/* Chart */}
-      <div className="relative w-full max-w-[260px] aspect-square">
+      <div className="relative w-[310px] h-[310px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -39,23 +39,23 @@ const CustomePieChart = ({
 
         {showTextAnchor && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-            <span className="text-sm text-gray-500 font-medium">{label}</span>
-            <span className="text-2xl font-semibold text-gray-900 mt-1">
-              &#8377;{totalAmount}
+            <span className="text-sm text-gray-500">{label}</span>
+            <span className="text-2xl font-semibold text-gray-900">
+              ₹{totalAmount}
             </span>
           </div>
         )}
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-6">
+      <div className="flex gap-6 mt-6">
         {data.map((item, index) => (
           <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
             <span
-              className="w-3 h-3 rounded-full shrink-0"
+              className="w-3 h-3 rounded-full inline-block"
               style={{ backgroundColor: colors[index % colors.length] }}
             />
-            <span className="font-medium">{item.name}</span>
+            <span>{item.name}</span>
           </div>
         ))}
       </div>

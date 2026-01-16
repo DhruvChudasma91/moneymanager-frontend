@@ -9,20 +9,21 @@ const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
         {name: "Total Expense", amount: totalExpense}
     ];
     return (
-        <div className="card">
+        <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
             <div className="flex items-center justify-between">
-                <h5 className="text-lg">Finance Overview</h5>
+                <h5 className="text-lg font-semibold text-gray-900">Finance Overview</h5>
             </div>
 
             <CustomePieChart
                 data={balanceData}
                 label="Total Balance"
-                totalAmount={`${addThousandSeparator(totalBalance)}`}
+                totalAmount={addThousandSeparator(totalBalance)}
                 colors={COLOURS}
                 showTextAnchor
             />
+
         </div>
-    )
+    );
 }
 
 export default FinanceOverview;
